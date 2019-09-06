@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package CreateTable;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author c3
  */
-@WebServlet(name = "QuerryPrint", urlPatterns = {"/QuerryPrint"})
-public class QuerryPrint extends HttpServlet {
+@WebServlet(name = "TableInfo", urlPatterns = {"/TableInfo"})
+public class TableInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +29,7 @@ public class QuerryPrint extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void service(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -37,10 +37,17 @@ public class QuerryPrint extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet QuerryPrint</title>");            
+            out.println("<title>Servlet TableInfo</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet QuerryPrint at " + request.getContextPath() + "</h1>");
+            out.println("<h1>CREATE TABLE</h1>");
+            out.println("<form action=\"ColumnInfo\" method=\"post\">\n" +
+                        "Table Name:<br>\n" +
+                        "<input type=\"text\" name=\"Name\"><br><br>\n" +
+                        "Number Of Columns:<br>\n" +
+                        "<input type=\"number\" name=\"Columns\" min=\"1\"><br><br>\n" +
+                        "<input type=\"submit\" value=\"CREATE\">\n" +
+                        "</form>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -84,9 +91,5 @@ public class QuerryPrint extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }
