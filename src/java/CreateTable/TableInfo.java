@@ -41,13 +41,13 @@ public class TableInfo extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>CREATE TABLE</h1>");
-            out.println("<form action=\"ColumnInfo\" method=\"post\">\n" +
-                        "Table Name:<br>\n" +
-                        "<input type=\"text\" name=\"Name\"><br><br>\n" +
-                        "Number Of Columns:<br>\n" +
-                        "<input type=\"number\" name=\"Columns\" min=\"1\"><br><br>\n" +
-                        "<input type=\"submit\" value=\"CREATE\">\n" +
-                        "</form>");
+            out.println("<form action='ColumnInfo' method='post'>"); 
+            out.println("Table Name:<br>");             
+            out.println("<input type='text' name='tname'><br><br>");
+            out.println("Number Of Columns:<br>");
+            out.println("<input type='number' name='Column' min='1'><br><br>");
+            out.println("<input type='submit' value='CREATE'>");
+            out.println("</form>");
             out.println("</body>");
             out.println("</html>");
         }

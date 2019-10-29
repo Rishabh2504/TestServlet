@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,6 +35,9 @@ public class ColumnInfo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session=request.getSession();
+            session.setAttribute("tname",request.getParameter("tname"));
+            session.setAttribute("Column",request.getParameter("Column"));
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -41,16 +45,20 @@ public class ColumnInfo extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h2>ADD COLUMN INFO</h2>");
+            out.println("<form action='CreateQuery' method='get'>");
             int nc=Integer.parseInt(request.getParameter("Column"));
             for(int i=1;i<=nc;i++){
-                out.println("<form action=\"PrimaryKey\" method=\"post\">\n" +
-                            "COLUMN "+i+":<br>\n" +
-                            "<input type=\"text\" name=\"Name\"><br><br>\n" +
-                            "Number Of Columns:<br>\n" +
-                            "<input type=\"number\" name=\"Columns\" min=\"1\"><br><br>\n" +
-                            "<input type=\"submit\" value=\"CREATE\">\n" +
-                            "</form>");
+                out.println("COLUMN " + i + ":<br><br>");
+                out.println("Name: <input type='text' name='column" + i + "name'><br><br>");
+                out.println("Type: <select name='column" + i + "type'>");
+                out.println("<option value='varchar'>Varchar</option>");
+                out.println("<option value='int'>Int</option>");
+                out.println("</select><br><br>");
+                out.println("Length: <input type='number' min='1' name='column" + i + "length'><br><br>");
+                out.println("Primarykey<input type='radio' name='pKey' value='column" + i +"'><br><br><br>");
             }
+            out.println("<input type='submit' value='GO'>");
+            out.println("</form>");
             out.println("</body>");
             out.println("</html>");
         }

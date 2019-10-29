@@ -12,13 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author c3
+ * @author Rishabh
  */
-@WebServlet(name = "Primarykey", urlPatterns = {"/Primarykey"})
-public class Primarykey extends HttpServlet {
+@WebServlet(name = "CreateQuery", urlPatterns = {"/CreateQuery"})
+public class CreateQuery extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +35,40 @@ public class Primarykey extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session=request.getSession(false);
+            String Name=(String)session.getAttribute("tname");
+            int col=Integer.parseInt((String)session.getAttribute("Column"));
+            String key=request.getParameter("pKey");
+            String query="Create table " + Name + "(<br>";
+            
+            for(int i=1;i<col;i++){
+                String name = request.getParameter("column" + i + "name");
+                String type = request.getParameter("column" + i + "type");
+                String length = request.getParameter("column" + i + "length");
+                query += name + " " + type + "(" + length + ")";
+                if(key.equals("column" + i)){
+                    query += " " + "primary key,<br>";
+                }else{
+                    query += ",<br>";
+                }
+            }
+            String name = request.getParameter("column" + col + "name");
+            String type = request.getParameter("column" + col + "type");
+            String length = request.getParameter("column" + col + "length");
+                query += name + " " + type + "(" + length + ")";
+                if(key.equals("column" + col)){
+                    query += " " + "primary key";
+                }
+            
+            query += " )";
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Primarykey</title>");            
+            out.println("<title>Servlet CreateQuery</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Primarykey at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Query Preview</h1>");
+            out.println("<h2>" + query + "</h2>");
             out.println("</body>");
             out.println("</html>");
         }
